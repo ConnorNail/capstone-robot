@@ -40,6 +40,7 @@ namespace RosSharp.RosBridgeClient
 
         protected override void Start()
         {
+            lastXPos = 0;
             base.Start();
             InitializeMessage();
         }
@@ -71,23 +72,26 @@ namespace RosSharp.RosBridgeClient
 
         private void GetGeometryLinear(Vector3 position, MessageTypes.Geometry.Vector3 geometryLinear)
         {
-            deltaX = (position.y - lastYPos) / Time.deltaTime * 20;
-            deltaY = -(position.x - lastXPos) / Time.deltaTime * 20;
-            deltaZ = (position.z - lastZPos) / Time.deltaTime * 20;
+            deltaX = (position.y - lastYPos) / Time.deltaTime * 10;
+            deltaY = -(position.x - lastXPos) / Time.deltaTime * 10;
+            deltaZ = (position.z - lastZPos) / Time.deltaTime * 10;
 
-            if (deltaY != 0)
-            {
-                geometryLinear.x = (position.y - lastYPos) / Time.deltaTime * 10;
-            }
             if (deltaX != 0)
             {
-                geometryLinear.y = -(position.x - lastXPos) / Time.deltaTime * 10;
+                geometryLinear.x = deltaX;
+            }
+            if (deltaY != 0)
+            {
+                geometryLinear.y = deltaY;
             }
             if (deltaZ != 0)
             {
-                geometryLinear.z = (position.z - lastZPos) / Time.deltaTime * 10;
+                geometryLinear.z = deltaZ;
             }
 
+            print(position.x);
+            print(lastXPos);
+            print(deltaX);
             print(geometryLinear.x);
 
             lastXPos = position.x;

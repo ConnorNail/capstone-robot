@@ -9,10 +9,14 @@ using UnityEngine.UI;
 public class HandSync : MonoBehaviour, IOnEventCallback
 {
     public const byte updatePoseEventCode = 1;
+    public const byte updateButtonsEventCode = 2;
 
     public GameObject rightHand;
 
     private float[] rightPose;
+
+    public bool rButtonHand;
+    public bool rButtonIndex;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +48,14 @@ public class HandSync : MonoBehaviour, IOnEventCallback
             float[] poseData = (float[])photonEvent.CustomData;
             rightHand.transform.position = new Vector3(poseData[0], poseData[1], poseData[2]);
             rightHand.transform.rotation = Quaternion.Euler(new Vector3(poseData[3], poseData[4], poseData[5]));
+        }
+
+        if (eventCode == updateButtonsEventCode)
+        {
+            Debug.Log("Updating buttons from master...");
+            bool[] buttonData = (bool[])photonEvent.CustomData;
+            rButtonHand = buttonData[0];
+            rButtonIndex = buttonData[1];
         }
     }
 
