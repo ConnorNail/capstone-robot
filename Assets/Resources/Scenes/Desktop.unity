@@ -642,6 +642,7 @@ MonoBehaviour:
   Topic: /unityChatter
   PublishedTransform: {fileID: 1463993928}
   FrameId: link6
+  handSync: {fileID: 1466191472}
 --- !u!114 &745717308
 MonoBehaviour:
   m_ObjectHideFlags: 0

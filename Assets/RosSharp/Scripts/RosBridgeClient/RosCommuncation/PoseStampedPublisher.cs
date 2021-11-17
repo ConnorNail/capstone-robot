@@ -25,6 +25,8 @@ namespace RosSharp.RosBridgeClient
         public Transform PublishedTransform;
         public string FrameId = "Unity";
 
+        public HandSync handSync;
+
         private float lastXPos;
         private float lastYPos;
         private float lastZPos;
@@ -35,6 +37,9 @@ namespace RosSharp.RosBridgeClient
         private float deltaX;
         private float deltaY;
         private float deltaZ;
+        private float deltaXAng;
+        private float deltaYAng;
+        private float deltaZAng;
 
         private MessageTypes.Geometry.TwistStamped message;
 
@@ -72,42 +77,68 @@ namespace RosSharp.RosBridgeClient
 
         private void GetGeometryLinear(Vector3 position, MessageTypes.Geometry.Vector3 geometryLinear)
         {
-            deltaX = (position.y - lastYPos) / Time.deltaTime * 10;
-            deltaY = -(position.x - lastXPos) / Time.deltaTime * 10;
-            deltaZ = (position.z - lastZPos) / Time.deltaTime * 10;
-
-            if (deltaX != 0)
+            if (handSync.rButtonHand)
             {
-                geometryLinear.x = deltaX;
-            }
-            if (deltaY != 0)
-            {
-                geometryLinear.y = deltaY;
-            }
-            if (deltaZ != 0)
-            {
-                geometryLinear.z = deltaZ;
-            }
+                deltaX = (position.y - lastYPos) / Time.deltaTime * 10;
+                deltaY = -(position.x - lastXPos) / Time.deltaTime * 10;
+                deltaZ = (position.z - lastZPos) / Time.deltaTime * 10;
 
-            print(position.x);
-            print(lastXPos);
-            print(deltaX);
-            print(geometryLinear.x);
+                if (deltaX != 0)
+                {
+                    geometryLinear.x = deltaX;
+                }
+                if (deltaY != 0)
+                {
+                    geometryLinear.y = deltaY;
+                }
+                if (deltaZ != 0)
+                {
+                    geometryLinear.z = deltaZ;
+                }
 
-            lastXPos = position.x;
-            lastYPos = position.y;
-            lastZPos = position.z;
+                lastXPos = position.x;
+                lastYPos = position.y;
+                lastZPos = position.z;
+            } else
+            {
+                geometryLinear.x = 0;
+                geometryLinear.y = 0;
+                geometryLinear.z = 0;
+            }
         }
 
         private void GetGeometryQuaternion(Vector3 eulerAngles, MessageTypes.Geometry.Vector3 geometryAngular)
         {
-            //geometryAngular.x = -(eulerAngles.y - lastYAng) / Time.deltaTime;
-            //geometryAngular.y = (eulerAngles.x - lastXAng) / Time.deltaTime;
-            //geometryAngular.z = -(eulerAngles.z - lastZAng) / Time.deltaTime;
+            if (handSync.rButtonHand)
+            {
+                deltaXAng = -(eulerAngles.y - lastYAng) / Time.deltaTime * (float)3.1415 / (float)180 * 10;
+                deltaYAng = (eulerAngles.x - lastXAng) / Time.deltaTime * (float)3.1415 / (float)180 * 10;
+                deltaZAng = -(eulerAngles.z - lastZAng) / Time.deltaTime * (float)3.1415 / (float)180 * 10;
 
-            lastXAng = eulerAngles.x;
-            lastYAng = eulerAngles.y;
-            lastZAng = eulerAngles.z;
+                if (deltaXAng != 0)
+                {
+                    geometryAngular.x = deltaXAng;
+                }
+                if (deltaYAng != 0)
+                {
+                    geometryAngular.y = deltaYAng;
+                }
+                if (deltaZAng != 0)
+                {
+                    geometryAngular.z = deltaZAng;
+                }
+
+                print(deltaXAng);
+
+                lastXAng = eulerAngles.x;
+                lastYAng = eulerAngles.y;
+                lastZAng = eulerAngles.z;
+            } else
+            {
+                geometryAngular.x = 0;
+                geometryAngular.y = 0;
+                geometryAngular.z = 0;
+            }
         }
 
     }
