@@ -17,6 +17,9 @@ public class HandSync : MonoBehaviour, IOnEventCallback
 
     public bool rButtonHand;
     public bool rButtonIndex;
+    public bool rButtonA;
+
+    public float deltaX;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +59,7 @@ public class HandSync : MonoBehaviour, IOnEventCallback
             bool[] buttonData = (bool[])photonEvent.CustomData;
             rButtonHand = buttonData[0];
             rButtonIndex = buttonData[1];
+            rButtonA = buttonData[2];
         }
     }
 
