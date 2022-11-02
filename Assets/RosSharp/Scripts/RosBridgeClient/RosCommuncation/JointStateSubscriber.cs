@@ -21,6 +21,7 @@ namespace RosSharp.RosBridgeClient
     {
         public List<string> JointNames;
         public List<JointStateWriter> JointStateWriters;
+        public HandSync handSync;
 
         protected override void ReceiveMessage(MessageTypes.Sensor.JointState message)
         {
@@ -31,6 +32,7 @@ namespace RosSharp.RosBridgeClient
                 if (index != -1)
                     JointStateWriters[index].Write((float) message.position[i]);
             }
+            handSync.sendJointStateUpdate(message.position);
         }
     }
 }

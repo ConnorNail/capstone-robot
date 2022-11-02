@@ -10,10 +10,12 @@ public class HandSync : MonoBehaviour, IOnEventCallback
 {
     public const byte updatePoseEventCode = 1;
     public const byte updateButtonsEventCode = 2;
+    public const byte updateJointStateEventCode = 3;
 
     public GameObject rightHand;
 
     private float[] rightPose;
+    private float[] jointState;
 
     public bool rButtonHand;
     public bool rButtonIndex;
@@ -24,21 +26,27 @@ public class HandSync : MonoBehaviour, IOnEventCallback
     void Start()
     {
         rightPose = new float[6];
+        jointState = new float[6];
     }
 
-    private void sendMapUpdates()
+    void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            rightPose[0] = rightHand.transform.position.x;
-            rightPose[1] = rightHand.transform.position.y;
-            rightPose[2] = rightHand.transform.position.z;
-            rightPose[3] = rightHand.transform.rotation.eulerAngles.x;
-            rightPose[4] = rightHand.transform.rotation.eulerAngles.y;
-            rightPose[5] = rightHand.transform.rotation.eulerAngles.z;
-            RaiseEventOptions raiseEvent = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
-            PhotonNetwork.RaiseEvent(updatePoseEventCode, rightPose, raiseEvent, SendOptions.SendReliable);
-        }
+        //sendJointStateUpdate();
+    }
+
+    public void sendJointStateUpdate(double[] states)
+    {
+       // if (!PhotonNetwork.IsMasterClient)
+       // {
+        jointState[0] = (float)states[0];
+        jointState[1] = (float)states[1];
+        jointState[2] = (float)states[2];
+        jointState[3] = (float)states[3];
+        jointState[4] = (float)states[4];
+        jointState[5] = (float)states[5];
+        RaiseEventOptions raiseEvent = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        PhotonNetwork.RaiseEvent(updateJointStateEventCode, jointState, raiseEvent, SendOptions.SendReliable);
+       // }
     }
 
     public void OnEvent(EventData photonEvent)
