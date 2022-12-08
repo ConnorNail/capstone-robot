@@ -27,12 +27,12 @@ public class MoveHand : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            this.transform.Rotate(Vector3.up, -10);
+            this.transform.Rotate(Vector3.up, -1);
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            this.transform.Rotate(Vector3.up, 10);
+            this.transform.Rotate(Vector3.up, 1);
         }
 
     }

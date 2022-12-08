@@ -14,7 +14,7 @@ public class HandSync : MonoBehaviour, IOnEventCallback
 
     public GameObject rightHand;
 
-    private float[] rightPose;
+    public float[] velocities;
     private float[] jointState;
 
     public bool rButtonHand;
@@ -25,7 +25,7 @@ public class HandSync : MonoBehaviour, IOnEventCallback
     // Start is called before the first frame update
     void Start()
     {
-        rightPose = new float[6];
+        velocities = new float[6];
         jointState = new float[6];
     }
 
@@ -57,8 +57,14 @@ public class HandSync : MonoBehaviour, IOnEventCallback
         {
             Debug.Log("Updating location from master...");
             float[] poseData = (float[])photonEvent.CustomData;
-            rightHand.transform.position = new Vector3(poseData[0], poseData[1], poseData[2]);
-            rightHand.transform.rotation = Quaternion.Euler(new Vector3(poseData[3], poseData[4], poseData[5]));
+            //rightHand.transform.position = new Vector3(poseData[0], poseData[1], poseData[2]);
+            //rightHand.transform.rotation = Quaternion.Euler(new Vector3(poseData[3], poseData[4], poseData[5]));
+            velocities[0] = (float)poseData[0];
+            velocities[1] = (float)poseData[1];
+            velocities[2] = (float)poseData[2];
+            velocities[3] = (float)poseData[3];
+            velocities[4] = (float)poseData[4];
+            velocities[5] = (float)poseData[5];
         }
 
         if (eventCode == updateButtonsEventCode)

@@ -64,6 +64,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\DebugGUI\Attributes\DebugGUIGraphAttribute.cs" />
+    <Compile Include="Assets\DebugGUI\Attributes\DebugGUIPrintAttribute.cs" />
+    <Compile Include="Assets\DebugGUI\DebugGUI.cs" />
+    <Compile Include="Assets\DebugGUI\Examples\DebugGUIExamples.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\EventSystemSpawner.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextButtonTransition.cs" />
@@ -317,6 +321,7 @@
     <None Include="Assets\Resources\Oculus\Avatar\Samples\SocialStarter\README.txt" />
     <None Include="Assets\Resources\Oculus\SampleFramework\Usage\OVROverlayCanvas\Shaders\UI Default Correct.shader" />
     <None Include="Assets\Resources\Oculus\SampleFramework\Core\CustomHands\Shaders\Hands_01.shader" />
+    <None Include="Assets\DebugGUI\README.txt" />
     <None Include="Assets\Resources\Oculus\Avatar\Resources\Materials\AvatarPBRV2Simple.shader" />
     <None Include="Assets\Photon\PhotonLibs\changes-library.txt" />
     <None Include="Assets\Resources\Oculus\Avatar\Resources\Materials\AvatarSurfaceShaderSelfOccluding.shader" />
